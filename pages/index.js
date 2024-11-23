@@ -2,11 +2,15 @@ function Home() {
   return (
     <div>
       <header
-        style={{ textAlign: "center", background: "#111", color: "#fff" }}
+        style={{
+          background: "#222",
+          color: "#fff",
+          margin: 0,
+          padding: "5px 10px",
+        }}
       >
         <h1>🔥JohnNews</h1>
       </header>
-      <hr />
       <h2>Estamos Em Construção...</h2>
     </div>
   );
