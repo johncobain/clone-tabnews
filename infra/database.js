@@ -1,5 +1,5 @@
 import { Client } from "pg";
-import fs from "fs";
+// import fs from "fs";
 
 async function query(queryObject) {
   const client = new Client({
@@ -8,10 +8,7 @@ async function query(queryObject) {
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
-    ssl: process.env.NODE_ENV === "development" ? false : true,
-    // : {
-    //     ca: fs.readFileSync(process.cwd() + "/production-postgres-certificate.crt").toString(),
-    //   },
+    ssl: getSSLValues(),
   });
   console.log("Credenciais do Postgres:", {
     port: process.env.POSTGRES_PORT,
@@ -35,3 +32,15 @@ async function query(queryObject) {
 export default {
   query: query,
 };
+
+function getSSLValues() {
+  // if(process.env.POSTGRES_CA){
+  //   return {
+  //     ca: process.env.POSTGRES_CA, //change end lines to \n and use one line in the POSTGRES_CA
+  //   }
+  // }
+  return process.env.NODE_ENV === "development" ? false : true;
+  // : {
+  //     ca: fs.readFileSync(process.cwd() + "/production-postgres-certificate.crt").toString(),
+  //   },
+}
