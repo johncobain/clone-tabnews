@@ -1,4 +1,5 @@
 import { Client } from "pg";
+import fs from "fs";
 
 async function query(queryObject) {
   const client = new Client({
@@ -7,6 +8,12 @@ async function query(queryObject) {
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
+    ssl:
+      process.env.POSTGRES_HOST === "localhost"
+        ? false
+        : {
+            ca: fs.readFileSync(process.cwd() + "/production-postgres-certificate.crt").toString(),
+          },
   });
   console.log("Credenciais do Postgres:", {
     port: process.env.POSTGRES_PORT,
