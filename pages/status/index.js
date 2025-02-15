@@ -41,7 +41,7 @@ function Status() {
 }
 
 function UpdatedAt() {
-  const { isLoading, data } = useSWR("/api/v1/status", fetchApi, {
+  const { isLoading, data, error } = useSWR("/api/v1/status", fetchApi, {
     refreshInterval: 2000,
   });
 
@@ -51,11 +51,14 @@ function UpdatedAt() {
     updatedAtText = new Date(data.updated_at).toLocaleString("pt-BR");
   }
 
-  return <div>Última atualização: {updatedAtText}</div>;
+  const hasError = !isLoading && error;
+  const hasData = !isLoading && data;
+
+  return <>{hasData && !hasError && <div>Última atualização: {updatedAtText}</div>}</>;
 }
 
 function DatabaseStatus() {
-  const { isLoading, data } = useSWR("/api/v1/status", fetchApi, {
+  const { isLoading, data, error } = useSWR("/api/v1/status", fetchApi, {
     refreshInterval: 2000,
   });
 
@@ -71,10 +74,13 @@ function DatabaseStatus() {
     );
   }
 
+  const hasError = !isLoading && error;
+  const hasData = !isLoading && data;
+
   return (
     <>
-      <h2>Database</h2>
-      {databaseStatusInformation}
+      {hasData && !hasError && <h2>Database</h2>}
+      {hasData && !hasError && databaseStatusInformation}
     </>
   );
 }
