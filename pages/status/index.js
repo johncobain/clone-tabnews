@@ -74,13 +74,11 @@ function DatabaseStatus() {
     );
   }
 
-  const hasError = !isLoading && error;
-  const hasData = !isLoading && data;
-
   return (
     <>
-      {hasData && !hasError && <h2>Database</h2>}
-      {hasData && !hasError && databaseStatusInformation}
+      <h2>Database</h2>
+      {error && "Erro ao carregar dados"}
+      {!error && databaseStatusInformation}
     </>
   );
 }
