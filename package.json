@@ -29,7 +29,7 @@
     "eslint": "9.20.1",
     "eslint-config-next": "15.1.7",
     "next": "15.1.7",
-    "node-pg-migrate": "7.9.1",
+    "node-pg-migrate": "^7.6.1",
     "pg": "8.13.3",
     "react": "19.0.0",
     "react-dom": "19.0.0"
