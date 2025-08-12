@@ -1,9 +1,9 @@
 import database from "infra/database.js";
-import orquestrator from "tests/orquestrator.js";
+import orchestrator from "tests/orchestrator.js";
 
 beforeAll(async () => {
-  await orquestrator.waitForAllServices();
-  await orquestrator.clearDatabase();
+  await orchestrator.waitForAllServices();
+  await orchestrator.clearDatabase();
 });
 
 describe("POST /api/v1/migrations", () => {

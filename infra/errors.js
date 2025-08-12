@@ -7,6 +7,7 @@ export class InternalServerError extends Error {
     this.action = "Entre em contato com o suporte.";
     this.statusCode = statusCode || 500;
   }
+
   toJSON() {
     return {
       name: this.name,
@@ -26,6 +27,7 @@ export class ServiceError extends Error {
     this.action = "Verifique se o serviço está disponível.";
     this.statusCode = 503;
   }
+
   toJSON() {
     return {
       name: this.name,
@@ -45,6 +47,7 @@ export class ValidationError extends Error {
     this.action = action || "Ajuste os dados enviados e tente novamente.";
     this.statusCode = 400;
   }
+
   toJSON() {
     return {
       name: this.name,
@@ -57,13 +60,33 @@ export class ValidationError extends Error {
 
 export class NotFoundError extends Error {
   constructor({ cause, message, action }) {
-    super(message || "Não foi possível encontrar esse recurso no sistema.", {
+    super(message || "Não foi possível encontrar este recurso no sistema.", {
       cause,
     });
     this.name = "NotFoundError";
     this.action = action || "Verifique se os parâmetros enviados na consulta estão certos.";
     this.statusCode = 404;
   }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      statusCode: this.statusCode,
+    };
+  }
+}
+export class UnauthorizedError extends Error {
+  constructor({ cause, message, action }) {
+    super(message || "Usuário não autenticado.", {
+      cause,
+    });
+    this.name = "UnauthorizedError";
+    this.action = action || "Faça novamente o login para continuar.";
+    this.statusCode = 401;
+  }
+
   toJSON() {
     return {
       name: this.name,
@@ -78,16 +101,16 @@ export class MethodNotAllowedError extends Error {
   constructor() {
     super("Método não permitido para esse endpoint.");
     this.name = "MethodNotAllowedError";
-    this.message = "Método não permitido para esse endpoint.";
     this.action = "Verifique se o método HTTP enviado é válido para esse endpoint.";
     this.statusCode = 405;
   }
+
   toJSON() {
     return {
       name: this.name,
       message: this.message,
       action: this.action,
-      statusCode: 405,
+      statusCode: this.statusCode,
     };
   }
 }
