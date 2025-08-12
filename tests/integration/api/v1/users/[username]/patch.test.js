@@ -1,12 +1,12 @@
 import { version as uuidVersion } from "uuid";
-import orquestrator from "tests/orquestrator.js";
+import orchestrator from "tests/orchestrator.js";
 import user from "models/user";
 import password from "models/password";
 
 beforeAll(async () => {
-  await orquestrator.waitForAllServices();
-  await orquestrator.clearDatabase();
-  await orquestrator.runPendingMigrations();
+  await orchestrator.waitForAllServices();
+  await orchestrator.clearDatabase();
+  await orchestrator.runPendingMigrations();
 });
 
 describe("PATCH /api/v1/users/[username]", () => {
@@ -29,11 +29,11 @@ describe("PATCH /api/v1/users/[username]", () => {
     });
 
     test("With duplicated 'username'", async () => {
-      await orquestrator.createUser({
+      await orchestrator.createUser({
         username: "user1",
       });
 
-      await orquestrator.createUser({
+      await orchestrator.createUser({
         username: "user2",
       });
 
@@ -58,11 +58,11 @@ describe("PATCH /api/v1/users/[username]", () => {
     });
 
     test("With duplicated 'email'", async () => {
-      await orquestrator.createUser({
+      await orchestrator.createUser({
         email: "email1@email.com",
       });
 
-      const createdUser2 = await orquestrator.createUser({
+      const createdUser2 = await orchestrator.createUser({
         email: "email2@email.com",
       });
 
@@ -87,7 +87,7 @@ describe("PATCH /api/v1/users/[username]", () => {
     });
 
     test("With unique 'username'", async () => {
-      const createdUser1 = await orquestrator.createUser({
+      const createdUser1 = await orchestrator.createUser({
         username: "uniqueUser1",
       });
 
@@ -120,7 +120,7 @@ describe("PATCH /api/v1/users/[username]", () => {
     });
 
     test("With unique 'email'", async () => {
-      const createdUser1 = await orquestrator.createUser({
+      const createdUser1 = await orchestrator.createUser({
         email: "uniqueEmail1@email.com",
       });
 
@@ -153,7 +153,7 @@ describe("PATCH /api/v1/users/[username]", () => {
     });
 
     test("With new 'password'", async () => {
-      const createdUser1 = await orquestrator.createUser({
+      const createdUser1 = await orchestrator.createUser({
         password: "newPassword1",
       });
 

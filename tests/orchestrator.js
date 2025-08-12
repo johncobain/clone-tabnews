@@ -9,12 +9,12 @@ async function waitForAllServices() {
   await waitForWebServer();
 
   async function waitForWebServer() {
-    return retry(fethcStatusPage, {
+    return retry(fetchStatusPage, {
       retries: 100,
       maxTimeout: 1000,
     });
 
-    async function fethcStatusPage() {
+    async function fetchStatusPage() {
       const response = await fetch("http://localhost:3000/api/v1/status");
 
       if (response.status !== 200) {
@@ -34,16 +34,17 @@ async function runPendingMigrations() {
 
 async function createUser(userObject) {
   return await user.create({
-    username: userObject.username || faker.internet.username().replace(/[_.-]/g, ""),
-    email: userObject.email || faker.internet.email(),
-    password: userObject.password || "validPassword",
+    username: userObject?.username || faker.internet.username().replace(/[_.-]/g, ""),
+    email: userObject?.email || faker.internet.email(),
+    password: userObject?.password || "validpassword",
   });
 }
 
-const orquestrator = {
+const orchestrator = {
   waitForAllServices,
   clearDatabase,
   runPendingMigrations,
   createUser,
 };
-export default orquestrator;
+
+export default orchestrator;
