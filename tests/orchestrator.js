@@ -64,10 +64,9 @@ async function createSession(userId) {
 }
 
 async function deleteAllEmails() {
-  await fetch(
-    `${emailHttpUrl}/messages`, {
+  await fetch(`${emailHttpUrl}/messages`, {
     method: "DELETE",
-  })
+  });
 }
 
 async function getLastEmail() {
@@ -80,7 +79,7 @@ async function getLastEmail() {
 
   lastEmailItem.text = emailTextBody;
 
-  return lastEmailItem;  
+  return lastEmailItem;
 }
 
 const orchestrator = {
