@@ -1,0 +1,34 @@
+import email from "infra/email.js";
+import orchestrator from "tests/orchestrator.js";
+
+beforeAll(async () => {
+  await orchestrator.waitForAllServices();
+});
+
+describe("infra/email.js", () => {
+  test("send", async () => {
+    await orchestrator.deleteAllEmails();
+
+    await email.send({
+      from: "FinTab <contato@fintab.com.br>",
+      to: "contato@curso.dev",
+      subject: "Teste de email",
+      text: "Olá, este é um teste de email."      
+    });
+
+    await email.send({
+      from: "FinTab <contato@fintab.com.br>",
+      to: "contato@curso.dev",
+      subject: "Último email enviado",
+      text: "Olá, este é o último email enviado."      
+    });
+
+    const lastEmail = await orchestrator.getLastEmail();
+    
+    expect(lastEmail.sender).toBe("<contato@fintab.com.br>");
+    expect(lastEmail.recipients[0]).toBe("<contato@curso.dev>");
+    expect(lastEmail.subject).toBe("Último email enviado");
+    expect(lastEmail.text).toBe("Olá, este é o último email enviado.\r\n");
+    
+  });
+});
